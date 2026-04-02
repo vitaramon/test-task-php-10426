@@ -86,6 +86,32 @@ final class EncryptingStream implements StreamInterface
     }
 
     /**
+     * @return int
+     */
+    public function tell(): int
+    {
+        throw WhatsAppMediaException::encryptionFailed('tell() not supported on non-seekable stream');
+    }
+
+    /**
+     * @return bool
+     */
+    public function eof(): bool
+    {
+        return $this->encryptedBuffer === null || $this->encryptedBuffer === '';
+    }
+
+    /**
+     * @return void
+     */
+    public function close(): void
+    {
+        $this->stream->close();
+        $this->encryptedBuffer = null;
+        $this->sidecar = null;
+    }
+
+    /**
      * @return bool
      */
     public function isWritable(): bool
