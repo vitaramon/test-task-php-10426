@@ -42,7 +42,9 @@ final class EncryptingStream implements StreamInterface
             if (in_array($this->type, [MediaType::VIDEO, MediaType::AUDIO], true)) {
                 $expanded = MediaKeyDeriver::expand($this->mediaKey, $this->type);
                 $macKey = substr($expanded, 48, 32);
-                $this->sidecar = SidecarGenerator::generateFromEncrypted($this->encryptedBuffer, $macKey);
+
+                $encPayload = substr($this->encryptedBuffer, 0, -MediaCrypter::MAC_LENGTH);
+                $this->sidecar = SidecarGenerator::generateFromEncrypted($encPayload, $macKey);
             }
         }
 
