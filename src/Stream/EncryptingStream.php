@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace WhatsApp\Media;
+namespace WhatsAppCryptoDecorator\Stream;
 
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use Psr\Http\Message\StreamInterface;
-use WhatsApp\Media\Crypto\MediaCrypter;
-use WhatsApp\Media\Crypto\MediaKeyDeriver;
-use WhatsApp\Media\Enum\MediaType;
-use WhatsApp\Media\Crypto\SidecarGenerator;
-use WhatsApp\Media\Exception\WhatsAppMediaException;
+use WhatsAppCryptoDecorator\Crypto\MediaCrypter;
+use WhatsAppCryptoDecorator\Crypto\MediaKeyDeriver;
+use WhatsAppCryptoDecorator\Enum\MediaType;
+use WhatsAppCryptoDecorator\Crypto\SidecarGenerator;
+use WhatsAppCryptoDecorator\Exception\WhatsAppMediaException;
 
 final class EncryptingStream implements StreamInterface
 {

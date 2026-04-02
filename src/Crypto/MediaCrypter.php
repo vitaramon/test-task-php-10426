@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WhatsApp\Media\Crypto;
+namespace WhatsAppCryptoDecorator\Crypto;
 
-use WhatsApp\Media\Enum\MediaType;
+use WhatsAppCryptoDecorator\Enum\MediaType;
 
 final class MediaCrypter
 {

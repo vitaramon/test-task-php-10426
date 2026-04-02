@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WhatsApp\Media\Crypto;
+namespace WhatsAppCryptoDecorator\Crypto;
 
 final class SidecarGenerator
 {

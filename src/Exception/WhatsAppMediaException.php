@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WhatsApp\Media\Exception;
+namespace WhatsAppCryptoDecorator\Exception;
 
 final class WhatsAppMediaException extends \RuntimeException
 {

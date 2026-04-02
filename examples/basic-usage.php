@@ -5,11 +5,11 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use GuzzleHttp\Psr7\Utils;
-use WhatsApp\Media\Crypto\MediaKeyDeriver;
-use WhatsApp\Media\DecryptingStream;
-use WhatsApp\Media\EncryptingStream;
-use WhatsApp\Media\Enum\MediaType;
-use WhatsApp\Media\Crypto\SidecarGenerator;
+use WhatsAppCryptoDecorator\Crypto\MediaKeyDeriver;
+use WhatsAppCryptoDecorator\DecryptingStream;
+use WhatsAppCryptoDecorator\EncryptingStream;
+use WhatsAppCryptoDecorator\Enum\MediaType;
+use WhatsAppCryptoDecorator\Crypto\SidecarGenerator;
 
 echo "Basic usage example for sample files" . PHP_EOL;
 

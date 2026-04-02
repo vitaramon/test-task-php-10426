@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WhatsApp\Media\Enum;
+namespace WhatsAppCryptoDecorator\Enum;
 
 enum MediaType: string
 {
