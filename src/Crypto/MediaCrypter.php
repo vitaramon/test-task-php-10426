@@ -8,8 +8,8 @@ use WhatsApp\Media\Enum\MediaType;
 
 final class MediaCrypter
 {
+    public const MAC_LENGTH = 10;
     private const AES_METHOD = 'aes-256-cbc';
-    private const MAC_TRUNCATE = 10;
 
     /**
      * @param string $plain
@@ -30,7 +30,7 @@ final class MediaCrypter
         }
 
         $hmac = hash_hmac('sha256', $iv . $enc, $macKey, true);
-        $mac  = substr($hmac, 0, self::MAC_TRUNCATE);
+        $mac  = substr($hmac, 0, self::MAC_LENGTH);
 
         return $enc . $mac;
     }
@@ -43,12 +43,12 @@ final class MediaCrypter
      */
     public static function decrypt(string $encrypted, string $mediaKey, MediaType $type): string
     {
-        if (strlen($encrypted) < 10) {
+        if (strlen($encrypted) < self::MAC_LENGTH) {
             throw new \InvalidArgumentException('Encrypted data too short');
         }
 
-        $file = substr($encrypted, 0, -10);
-        $mac  = substr($encrypted, -10);
+        $file = substr($encrypted, 0, -self::MAC_LENGTH);
+        $mac  = substr($encrypted, -self::MAC_LENGTH);
 
         $expanded = MediaKeyDeriver::expand($mediaKey, $type);
         $iv        = substr($expanded, 0, 16);
@@ -56,7 +56,7 @@ final class MediaCrypter
         $macKey    = substr($expanded, 48, 32);
 
         $computed = hash_hmac('sha256', $iv . $file, $macKey, true);
-        $computedTruncated = substr($computed, 0, self::MAC_TRUNCATE);
+        $computedTruncated = substr($computed, 0, self::MAC_LENGTH);
 
         if (!hash_equals($mac, $computedTruncated)) {
             throw new \RuntimeException('MAC validation failed - possible tampering');
