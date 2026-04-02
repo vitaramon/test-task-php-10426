@@ -10,30 +10,6 @@ final class MediaKeyDeriver
 {
 
     /**
-     * @param string $ikm
-     * @param string $info
-     * @param int $length
-     * @return string
-     */
-    private static function hkdf(string $ikm, string $info, int $length = 112): string
-    {
-        $hashLen = 32; // SHA-256
-        $prk = hash_hmac('sha256', $ikm, '', true); // salt = empty
-
-        $okm = '';
-        $t = '';
-        $i = 1;
-
-        while (strlen($okm) < $length) {
-            $t = hash_hmac('sha256', $t . $info . chr($i), $prk, true);
-            $okm .= $t;
-            $i++;
-        }
-
-        return substr($okm, 0, $length);
-    }
-
-    /**
      * @param string $mediaKey
      * @param MediaType $type
      * @return string
@@ -44,7 +20,7 @@ final class MediaKeyDeriver
             throw new \InvalidArgumentException('MediaKey must be exactly 32 bytes');
         }
 
-        $expanded = self::hkdf($mediaKey, $type->value, 112);
+        $expanded = hash_hkdf('sha256', $mediaKey, 112, $type->value, '');
 
         if (strlen($expanded) !== 112) {
             throw new \RuntimeException('HKDF expansion failed');
