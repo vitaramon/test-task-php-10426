@@ -1,5 +1,5 @@
 {
-  "name": "kosmonavt-kosmosa/test-task-php-10426",
+  "name": "kosmonavt-kosmosa/whatsapp-crypto-decorator",
   "description": "Stream decorators for wa media (psr-7))",
   "type": "library",
   "require": {
