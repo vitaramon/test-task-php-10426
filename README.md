@@ -1,3 +1,31 @@
+## Пример использования
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use GuzzleHttp\Psr7\Utils;
+use WhatsApp\Media\EncryptingStream;
+use WhatsApp\Media\DecryptingStream;
+use WhatsApp\Media\Enum\MediaType;
+
+// Шифрование
+$plainStream = Utils::streamFor(fopen('samples/video.original', 'r'));
+$mediaKey    = file_get_contents('samples/video.key');
+
+$encryptingStream = new EncryptingStream($plainStream, $mediaKey, MediaType::VIDEO);
+
+$encryptedData = $encryptingStream->getContents();           // полный зашифрованный файл
+$sidecar       = $encryptingStream->getSidecar();            // для video/audio
+
+// Дешифрование
+$encryptedStream = Utils::streamFor($encryptedData);
+$decryptingStream = new DecryptingStream($encryptedStream, $mediaKey, MediaType::VIDEO);
+
+$decryptedData = $decryptingStream->getContents();
+```
+
 # Тестовое задание для PHP-разработчика
 
 Требуется реализовать декораторы для [PSR-7 потоков](https://github.com/php-fig/http-message/blob/14b9b813c5e36af4498ef38ef97938bf7090fd52/src/StreamInterface.php), которые будут зашифровывать и расшифровывать их по алгоритмам, используемым WhatsApp.
