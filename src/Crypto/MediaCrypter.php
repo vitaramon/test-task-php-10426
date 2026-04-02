@@ -62,7 +62,7 @@ final class MediaCrypter
             throw new \RuntimeException('MAC validation failed - possible tampering');
         }
 
-        $dec = openssl_decrypt($file, self::AES_METHOD, $cipherKey, OPENSSL_RAW_DATA, $iv);
+        $dec = openssl_decrypt($file, self::AES_METHOD, $cipherKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $iv);
         if ($dec === false) {
             throw new \RuntimeException('AES decryption failed: ' . openssl_error_string());
         }
